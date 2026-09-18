@@ -1,58 +1,45 @@
 # HUMEAN Ecosystem
 
-HUMEAN and OmniRoute infrastructure for governed AI orchestration, capability evaluation, and focused applications.
+This repository contains the generic infrastructure layer for HUMEAN and OmniRoute.
 
-## Vision
+It is intentionally public and focused on:
+- generic orchestration contracts;
+- capability registry design;
+- provider abstraction;
+- routing logic;
+- governance and audit model;
+- environment/watch and proposal-based updates.
 
-- **HUMEAN** provides memory, evaluation, governance, risk controls, audit, and human approval.
-- **OmniRoute** decomposes tasks and routes them to suitable models, agents, tools, and sources.
-- **SaveMoneyReminder (SMV)** is the first concrete application.
-- **Time & Travel** is a future focused application, currently at the specification stage.
+It does not contain product-specific application code for private projects or production products.
 
-The infrastructure stays generic and invisible to end users. Applications remain intentionally narrow: one domain, one audience, one measurable value proposition.
+## Project boundary
 
-## Status
+The public repository intentionally excludes:
+- private application code;
+- business-specific product logic;
+- repositories or datasets tied to private product work;
+- production pricing, customer flows, or sensitive operational data.
 
-This repository is a clean foundation. It contains architecture documents, initial contracts, a capability probe, and a minimal registry schema. It does not yet claim production-ready orchestration.
-
-## Repository layout
+## Repository scope
 
 ```text
 humean-ecosystem/
-├── apps/                    # Focused products and integration contracts
-├── docs/                    # Architecture and product decisions
-├── packages/humean-core/    # Generic HUMEAN/OmniRoute domain package
-├── schemas/                 # Database and event schemas
-├── scripts/                 # Local operational tools
-└── tests/                   # Cross-package tests
+├── docs/
+├── packages/humean-core/
+├── schemas/
+├── scripts/
+├── tests/
+└── README.md
 ```
 
 ## Principles
 
-1. No silent self-modification: environment changes produce proposed diffs.
-2. Human approval is required for high-impact or low-confidence changes.
-3. Providers are interchangeable; credentials never live in source code.
-4. Evidence, provenance, uncertainty, cost, latency, and reliability are first-class data.
-5. No new application domain until an existing product has real users.
+1. Generic infrastructure first.
+2. Applications remain out-of-scope until they are mature and need explicit integration.
+3. Provider changes are proposals, not silent mutations.
+4. Human approval remains required for high-impact policy or routing decisions.
+5. Security, provenance, and audit are first-class concerns.
 
-## First steps
+## Historical reference
 
-```bash
-python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\\Scripts\\activate
-pip install -e ".[dev]"
-pytest
-
-# Optional capability probe; configure keys in .env first
-python scripts/capability_probe.py --prompt "Explain subscription comparison in two sentences."
-```
-
-See [HUMEAN_ECOSYSTEM_SUMMARY.md](HUMEAN_ECOSYSTEM_SUMMARY.md), [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and [docs/PRODUCT_BOUNDARIES.md](docs/PRODUCT_BOUNDARIES.md).
-
-## Legacy reference
-
-The former `humean-ai` repository is retained as historical prototype material. Its configuration and experimental provider code must be reviewed before selective migration; it is not copied wholesale into this repository.
-
-## License
-
-AGPL-3.0-or-later.
+A historical configuration reference from the earlier prototype remains in `docs/archive/legacy_humean_config.json` and should be treated as legacy context only.

@@ -1,26 +1,25 @@
-# Product boundaries
+# Public repo boundary
 
-## HUMEAN / OmniRoute
+This repository is intentionally the public infrastructure layer only.
 
-Generic infrastructure, not an end-user product. It owns routing, capabilities, governance, memory, evidence, audit, and approval workflows.
+The private application repositories remain separate and are not published here.
 
-## SMV / SaveMoneyReminder
+## What this repo contains
 
-Focused consumer comparison product. It owns offers, savings calculations, supplier instructions, lead capture, and product UX. It must remain usable without requiring an LLM at request time.
+- architecture and governance documents;
+- route and capability abstractions;
+- provider contracts and evaluation procedures;
+- environmental watch and registry proposals;
+- reusable public infrastructure patterns.
 
-## Time & Travel
+## What this repo does not contain
 
-Focused leisure and travel planning product. Its MVP should begin with local, short-duration scenarios and verified sources. Long-distance road trips, calendars, festivals, and complex personalization come later.
+- private product code;
+- product-specific data models;
+- private application implementation details;
+- customer or user flows for products still under development;
+- proprietary pricing or competitive product logic.
 
-## Acceptance rules for a new domain
+## Practical rule
 
-A new domain requires:
-
-- a defined audience and user problem;
-- authoritative data sources;
-- a measurable validation scenario;
-- a legal and risk review;
-- a credible cost/revenue path;
-- an owner and maintenance plan.
-
-Without these, the idea belongs in `docs/ideas/`, not in the core or an application package.
+If an application is still private, immature, or product-sensitive, it belongs outside this public repository.
