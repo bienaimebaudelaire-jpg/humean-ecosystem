@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "humean-ecosystem"
+version = "0.1.0"
+description = "Governed AI orchestration and capability evaluation infrastructure"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "AGPL-3.0-or-later"}
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/humean-core/tests", "tests"]
+
+[tool.setuptools.packages.find]
+where = ["packages/humean-core/src"]
