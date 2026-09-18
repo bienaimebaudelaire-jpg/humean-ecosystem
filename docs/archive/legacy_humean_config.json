@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "system": {
+    "name": "HUMEAN Cognitive System",
+    "mode": "development",
+    "auto_update": true
+  },
+  "cognitive_engine": {
+    "primary": "gemini",
+    "fallbacks": ["ollama", "huggingface"],
+    "energy_threshold": 0.5,
+    "max_context_memories": 5
+  },
+  "apis": {
+    "ollama": "",
+    "gemini": "",
+    "huggingface": ""
+  },
+  "modules": {
+    "gateway": "operational",
+    "memory": "operational",
+    "scheduler": "ready",
+    "ethics": "ready",
+    "monitoring": "operational"
+  }
+}
