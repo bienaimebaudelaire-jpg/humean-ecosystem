@@ -42,5 +42,18 @@
     "latency_ms": 50,
     "reliability": null,
     "source_url": "https://www.datacamp.com/blog/system-one-models-jev"
+  },
+  {
+    "id": "gateway/claude-sonnet-4-6",
+    "kind": "model",
+    "status": "candidate",
+    "domain": "general",
+    "cost_input_usd": null,
+    "cost_output_usd": null,
+    "latency_ms": null,
+    "reliability": null,
+    "source_url": "https://github.com/diegosouzapw/OmniRoute",
+    "gateway_model": "cc/claude-sonnet-4-6",
+    "note": "Routed through a self-hosted diegosouzapw/OmniRoute gateway (see humean_core.providers.omniroute_gateway). Candidate until run live and promoted by a human via review_diffs.py -- cost/latency/reliability are reported per-call via X-OmniRoute-* response headers, not fixed here."
   }
 ]
