@@ -1,4 +1,4 @@
-"""Minimal routing logic for OmniRoute.
+"""Minimal routing logic for RouteCore.
 
 Given a Task and a pool of Capability objects, select the best candidate
 and return an auditable Route with a human-readable rationale.
