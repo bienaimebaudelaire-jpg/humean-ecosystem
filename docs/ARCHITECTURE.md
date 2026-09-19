@@ -3,14 +3,14 @@
 ## Boundaries
 
 ```text
-Application → HUMEAN contract → OmniRoute → Capability Registry → Provider/tool
+Application → HUMEAN contract → RouteCore → Capability Registry → Provider/tool
                          │                │
                          ├─ policy        └─ evidence/provenance
                          ├─ audit
                          └─ human gate
 ```
 
-HUMEAN is the control and accountability layer. OmniRoute is the execution planner and router. Applications own their domain rules and user experience.
+HUMEAN is the control and accountability layer. RouteCore is the execution planner and router. Applications own their domain rules and user experience.
 
 ## Core domain objects
 
@@ -43,3 +43,11 @@ The environment watcher may read explicitly configured provider documentation an
 - no hidden provider switching for high-impact tasks;
 - no claim that a response is verified without evidence;
 - no broad application logic inside the generic core.
+
+## Provider execution backend
+
+RouteCore may delegate provider execution to a self-hosted instance of the
+open-source **OmniRoute** gateway (github.com/diegosouzapw/OmniRoute) for
+free-tier-aware multi-provider access. Its terms-risk catalog (ok / caution /
+ambiguous / avoid per provider) is treated as an input constraint, consistent
+with the non-goal below of never circumventing quotas or farming keys.
