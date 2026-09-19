@@ -3,7 +3,7 @@
 import pytest
 
 from humean_core import Capability, Task
-from router import NoEligibleCapabilityError, select_capability
+from humean_core.router import NoEligibleCapabilityError, select_capability
 
 
 def _cap(id_, status="active", domain="general", cost=1.0, reliability=0.9):
