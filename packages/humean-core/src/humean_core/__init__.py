@@ -1,4 +1,4 @@
-"""Minimal domain contracts for HUMEAN/OmniRoute."""
+"""Minimal domain contracts for HUMEAN/RouteCore."""
 
 from dataclasses import dataclass, field
 from typing import Any
