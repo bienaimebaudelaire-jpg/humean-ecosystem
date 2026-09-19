@@ -1,0 +1,46 @@
+[
+  {
+    "id": "claude-sonnet-4-6",
+    "kind": "model",
+    "status": "active",
+    "domain": "general",
+    "cost_input_usd": 3.0,
+    "cost_output_usd": 15.0,
+    "latency_ms": 1200,
+    "reliability": 0.98,
+    "source_url": "https://docs.claude.com"
+  },
+  {
+    "id": "gemini",
+    "kind": "model",
+    "status": "active",
+    "domain": "general",
+    "cost_input_usd": 0.075,
+    "cost_output_usd": 0.3,
+    "latency_ms": 900,
+    "reliability": 0.9,
+    "source_url": "https://ai.google.dev/pricing"
+  },
+  {
+    "id": "deepseek-chat",
+    "kind": "model",
+    "status": "active",
+    "domain": "general",
+    "cost_input_usd": 0.27,
+    "cost_output_usd": 1.1,
+    "latency_ms": 1500,
+    "reliability": 0.85,
+    "source_url": "https://platform.deepseek.com/api-docs/pricing"
+  },
+  {
+    "id": "jev-latest",
+    "kind": "model",
+    "status": "candidate",
+    "domain": "routing",
+    "cost_input_usd": 0.042,
+    "cost_output_usd": 0.0,
+    "latency_ms": 50,
+    "reliability": null,
+    "source_url": "https://www.datacamp.com/blog/system-one-models-jev"
+  }
+]
