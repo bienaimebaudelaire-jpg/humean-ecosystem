@@ -8,7 +8,7 @@
 Trois briques distinctes, à ne pas confondre :
 
 ```
-HUMEAN / OMNIROUTE          ← infrastructure générique (invisible pour l'utilisateur final)
+HUMEAN / ROUTECORE          ← infrastructure générique (invisible pour l'utilisateur final)
         │
    ┌────┴────┐
    ▼         ▼
@@ -16,7 +16,7 @@ HUMEAN / OMNIROUTE          ← infrastructure générique (invisible pour l'uti
 (avancé)     (concept)
 ```
 
-**Règle produit fondamentale** : HUMEAN/OmniRoute reste générique et invisible. Chaque application reste volontairement étroite (un domaine, un public), pour éviter de reproduire la dérive "trop vaste" qu'a connue HUMEAN à ses débuts.
+**Règle produit fondamentale** : HUMEAN/RouteCore reste générique et invisible. Chaque application reste volontairement étroite (un domaine, un public), pour éviter de reproduire la dérive "trop vaste" qu'a connue HUMEAN à ses débuts.
 
 **Domaines explicitement écartés pour l'instant** : logistique, aéronautique, pharmaceutique, ingénierie — trop réglementés, cycles de vente B2B trop longs, aucune expérience/légitimité de départ sur ces secteurs. Pas de nouveau domaine tant que SMV ou Time&Travel n'a pas d'utilisateur réel.
 
@@ -24,12 +24,12 @@ HUMEAN / OMNIROUTE          ← infrastructure générique (invisible pour l'uti
 
 ---
 
-## 2. HUMEAN / OmniRoute — l'infrastructure
+## 2. HUMEAN / RouteCore — l'infrastructure
 
 ### 2.1 Répartition des rôles
 
-- **OmniRoute** = moteur d'orchestration/routage dynamique. Répond à *"qui doit faire quoi ?"* — décompose une tâche, identifie les capacités nécessaires, sélectionne agent/modèle/outil/source, exécute, vérifie.
-- **HUMEAN** = couche supérieure de contrôle au-dessus d'OmniRoute : mémoire, évaluation, gouvernance, risque, audit. Répond à *"pourquoi cette combinaison ? est-elle fiable ? que fait-on du résultat ?"*
+- **RouteCore** = moteur d'orchestration/routage dynamique. Répond à *"qui doit faire quoi ?"* — décompose une tâche, identifie les capacités nécessaires, sélectionne agent/modèle/outil/source, exécute, vérifie.
+- **HUMEAN** = couche supérieure de contrôle au-dessus de RouteCore : mémoire, évaluation, gouvernance, risque, audit. Répond à *"pourquoi cette combinaison ? est-elle fiable ? que fait-on du résultat ?"*
 - **MetaCortex** = nom possible de la couche de délibération/orchestration de HUMEAN (pas une "super-IA" autonome — explicitement écarté du périmètre).
 
 ### 2.2 Noyau fonctionnel retenu
