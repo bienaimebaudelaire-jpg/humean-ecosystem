@@ -1,6 +1,6 @@
 # HUMEAN Ecosystem
 
-This repository contains the generic infrastructure layer for HUMEAN and OmniRoute.
+This repository contains the generic infrastructure layer for HUMEAN and RouteCore.
 
 It is intentionally public and focused on:
 - generic orchestration contracts;
