@@ -1,0 +1,52 @@
+"""Tests for the run_task end-to-end entry point."""
+
+from humean_core import Capability, Task
+from humean_core.run_task import run
+
+
+def _cap(id_, reliability=0.8, source_url="https://example.com"):
+    return Capability(
+        id=id_,
+        kind="model",
+        status="active",
+        domain="general",
+        metadata={"cost_input_usd": 1.0, "cost_output_usd": 0, "reliability": reliability, "source_url": source_url},
+    )
+
+
+def _mock_executor(capability_id: str, prompt: str) -> str:
+    return f"mock response from {capability_id}"
+
+
+def test_normal_task_does_not_require_approval():
+    caps = [_cap("cheap-model")]
+    task = Task(prompt="hello", domain="general", risk="low")
+
+    decision = run(task, caps, executor=_mock_executor)
+
+    assert decision.route.capability_ids == ("cheap-model",)
+    assert decision.requires_human_approval is False
+    assert decision.evidence[0].source_url == "https://example.com"
+
+
+def test_high_risk_task_forces_human_approval():
+    caps = [_cap("cheap-model")]
+    task = Task(prompt="hello", domain="general", risk="high")
+
+    decision = run(task, caps, executor=_mock_executor)
+
+    assert decision.requires_human_approval is True
+
+
+def test_execution_failure_produces_decision_not_crash():
+    caps = [_cap("cheap-model")]
+    task = Task(prompt="hello", domain="general", risk="low")
+
+    def failing_executor(capability_id, prompt):
+        raise RuntimeError("boom")
+
+    decision = run(task, caps, executor=failing_executor)
+
+    assert decision.uncertainty == 1.0
+    assert decision.requires_human_approval is True
+    assert "boom" in decision.result_summary
