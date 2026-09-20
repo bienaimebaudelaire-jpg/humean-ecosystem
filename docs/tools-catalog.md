@@ -50,3 +50,24 @@ Claude Code communautaires). Statut : a-installer / installe / ecarte, avec la r
 Tous les outils communautaires ci-dessus (non listes comme "officiel Anthropic") sont du code
 tiers non verifie -- lire le code avant de lancer une installation qui s'execute avec les droits
 de Claude Code sur la machine de l'utilisateur.
+
+
+## Architectures de reference trouvees par recherche proactive (pas des installs, des inspirations)
+
+- **WikiCheck** (`trokhymovych/WikiCheck`) : API de fact-checking basee sur Wikipedia, open source,
+  developpee avec la Wikimedia Foundation. Candidat serieux comme vrai connecteur source niveau 1/2
+  pour Fact Check V2, pas juste une reference.
+- **reverify** (`2akouwu/reverify`, 1231 etoiles) : meme principe que notre moteur -- des outils
+  deterministes tranchent, chaque affirmation verifiee contre une verite terrain. A etudier pour
+  comparer notre architecture.
+- **ClaimeAI** (`BharathxD/ClaimeAI`) : decoupe un texte en affirmations verifiables individuelles
+  via LangGraph. Meme logique que notre moteur, implementation alternative a comparer.
+- **voyant** (`chernistry/voyant`) : agent de voyage avec verification factuelle -- croisement
+  interessant entre Fact Check et Time & Travel.
+- **MyTripPlanner** (`Prot10/MyTripPlanner`) : concurrent direct le plus proche de Time & Travel
+  (self-hosted, vrais hotels/restos/budget). A regarder pour ce qu'ils ont resolu qu'on n'a pas encore.
+- **hesreallyhim/awesome-claude-code** (54k etoiles) : liste de reference maitresse a checker en
+  premier avant toute future evaluation d'outil individuel.
+
+Trouves via recherche GitHub proactive (triee par etoiles) plutot qu'a partir d'un nom fourni --
+a refaire periodiquement, pas seulement quand l'utilisateur envoie une liste.
