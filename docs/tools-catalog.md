@@ -54,9 +54,12 @@ de Claude Code sur la machine de l'utilisateur.
 
 ## Architectures de reference trouvees par recherche proactive (pas des installs, des inspirations)
 
-- **WikiCheck** (`trokhymovych/WikiCheck`) : API de fact-checking basee sur Wikipedia, open source,
-  developpee avec la Wikimedia Foundation. Candidat serieux comme vrai connecteur source niveau 1/2
-  pour Fact Check V2, pas juste une reference.
+- **WikiCheck** (`trokhymovych/WikiCheck`) : CORRECTION apres verification -- ce n'est pas une API
+  hebergee, c'est un projet de recherche (CIKM 2021) qui necessite d'auto-heberger un modele NLI.
+  Reference d'architecture seulement, pas un connecteur branchable rapidement.
+- **API Wikipedia officielle** (`fr.wikipedia.org/api/rest_v1/`) : gratuite, sans cle, hebergee --
+  celle-la est reellement branchable tout de suite pour des lookups de faits encyclopediques simples,
+  contrairement a WikiCheck. A utiliser comme premiere brique live avant d'envisager un NLI maison.
 - **reverify** (`2akouwu/reverify`, 1231 etoiles) : meme principe que notre moteur -- des outils
   deterministes tranchent, chaque affirmation verifiee contre une verite terrain. A etudier pour
   comparer notre architecture.
