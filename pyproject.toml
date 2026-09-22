@@ -22,7 +22,7 @@ providers = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["packages/humean-core/tests", "tests"]
+testpaths = ["packages/humean-core/tests"]
 
 [tool.setuptools.packages.find]
 where = ["packages/humean-core/src"]

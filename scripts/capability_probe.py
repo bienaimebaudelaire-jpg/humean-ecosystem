@@ -30,12 +30,12 @@ def _call_claude(prompt: str) -> tuple[bool, str | None]:
     import anthropic
 
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-    client.messages.create(
+    response = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=50,
         messages=[{"role": "user", "content": prompt}],
     )
-    return True, None
+    return True, response.content[0].text
 
 
 def _call_gemini(prompt: str) -> tuple[bool, str | None]:
@@ -43,16 +43,18 @@ def _call_gemini(prompt: str) -> tuple[bool, str | None]:
 
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
     model = genai.GenerativeModel("gemini-2.0-flash")
-    model.generate_content(prompt)
-    return True, None
+    response = model.generate_content(prompt)
+    return True, response.text
 
 
 def _call_deepseek(prompt: str) -> tuple[bool, str | None]:
     from openai import OpenAI
 
     client = OpenAI(api_key=os.environ["DEEPSEEK_API_KEY"], base_url="https://api.deepseek.com")
-    client.chat.completions.create(model="deepseek-chat", messages=[{"role": "user", "content": prompt}])
-    return True, None
+    response = client.chat.completions.create(
+        model="deepseek-chat", messages=[{"role": "user", "content": prompt}]
+    )
+    return True, response.choices[0].message.content
 
 
 # capability_id must match the ids used in the capability registry (schemas/,
@@ -93,12 +95,13 @@ def main() -> None:
         if args.live and configured:
             start = time.perf_counter()
             try:
-                success, error = call_fn(args.prompt)
+                success, text_or_error = call_fn(args.prompt)
             except Exception as exc:  # noqa: BLE001 — probe must never crash the batch
-                success, error = False, str(exc)
+                success, text_or_error = False, str(exc)
             entry["latency_ms"] = round((time.perf_counter() - start) * 1000)
             entry["success"] = success
-            entry["note"] = error or "Live call succeeded."
+            entry["note"] = "Live call succeeded." if success else (text_or_error or "Live call failed.")
+            entry["response_text"] = text_or_error if success else None
 
         record(Path(args.log), entry)
         status = "skipped (no key)" if not configured else ("live" if args.live else "scaffold-only")
