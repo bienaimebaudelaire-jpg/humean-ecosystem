@@ -26,9 +26,10 @@ The public repository intentionally excludes:
 humean-ecosystem/
 ├── docs/
 ├── packages/humean-core/
+│   ├── src/
+│   └── tests/
 ├── schemas/
 ├── scripts/
-├── tests/
 └── README.md
 ```
 

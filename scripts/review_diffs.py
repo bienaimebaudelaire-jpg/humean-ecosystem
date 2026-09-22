@@ -2,7 +2,9 @@
 
 Reads data/registry_diffs.json (written by aggregate_observations.py),
 shows each "pending_human_review" entry, and asks for an explicit
-approve/reject decision. Approved diffs are merged into capabilities.json.
+approve/reject decision. Approved diffs are merged into
+schemas/capabilities.json — a local, gitignored copy of
+schemas/capabilities.example.json; copy the example to get started.
 Nothing is ever applied automatically — see ADR-0002.
 """
 

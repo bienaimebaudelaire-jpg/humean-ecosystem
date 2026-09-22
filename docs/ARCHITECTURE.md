@@ -1,5 +1,18 @@
 # Architecture
 
+## Naming
+
+**RouteCore** is this repository's internal execution planner and router
+(`humean_core.router`, `humean_core.run_task`) — it has no third-party
+dependency. **OmniRoute** ([github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute))
+is an unrelated, optional third-party self-hosted gateway that RouteCore
+may delegate execution to for a subset of capabilities (see "Provider
+execution backend" below and `humean_core.providers.omniroute_gateway`).
+The two names are easy to conflate because RouteCore can route *to*
+OmniRoute, but they are separate systems: RouteCore is the generic
+infrastructure defined here; OmniRoute is one optional, pluggable executor
+among several.
+
 ## Boundaries
 
 ```text

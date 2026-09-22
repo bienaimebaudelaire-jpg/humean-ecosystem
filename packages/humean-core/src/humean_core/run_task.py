@@ -15,6 +15,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 from typing import Callable
+from uuid import uuid4
 
 from humean_core import Capability, Decision, Evidence, Task
 from humean_core.router import NoEligibleCapabilityError, select_capability
@@ -27,20 +28,37 @@ def _default_executor(capability_id: str, prompt: str) -> str:
 
     Imported lazily so humean-core doesn't hard-depend on provider SDKs
     (see pyproject.toml's [providers] optional group).
+
+    This only works from a source checkout of this monorepo, where
+    scripts/ sits four directories above this file. Once humean-core is
+    installed as a standalone package, scripts/ won't exist on disk next
+    to it — pass a custom `executor=...` to run() instead (e.g. one built
+    from humean_core.providers.omniroute_gateway.make_gateway_executor).
     """
     import sys
     from pathlib import Path
 
-    sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "scripts"))
+    scripts_dir = Path(__file__).resolve().parents[4] / "scripts"
+    if not scripts_dir.is_dir():
+        raise ImportError(
+            "The default executor requires a source checkout of the "
+            f"humean-ecosystem monorepo (expected scripts/ at {scripts_dir}); "
+            "pass a custom executor=... to run() instead."
+        )
+    sys.path.insert(0, str(scripts_dir))
     from capability_probe import PROVIDERS  # type: ignore
 
     if capability_id not in PROVIDERS:
         raise ValueError(f"No executor available for '{capability_id}'.")
     _, call_fn = PROVIDERS[capability_id]
-    success, error = call_fn(prompt)
+    success, text = call_fn(prompt)
     if not success:
-        raise RuntimeError(error or "provider call failed")
-    return "OK"  # capability_probe's call_fn doesn't return text yet — see note below
+        raise RuntimeError(text or "provider call failed")
+    if text is None:
+        raise NotImplementedError(
+            f"Provider for '{capability_id}' does not return response text yet."
+        )
+    return text
 
 
 def run(
@@ -53,7 +71,8 @@ def run(
     Never swallows routing failures — if no capability qualifies, this
     raises NoEligibleCapabilityError rather than silently degrading.
     """
-    route = select_capability(task, capabilities, task_id=task.prompt[:40])
+    task_id = str(uuid4())
+    route = select_capability(task, capabilities, task_id=task_id)
     capability_id = route.capability_ids[0]
     capability = next(c for c in capabilities if c.id == capability_id)
 
@@ -80,7 +99,7 @@ def run(
     )
 
     return Decision(
-        task_id=task.prompt[:40],
+        task_id=task_id,
         route=route,
         result_summary=result_text,
         uncertainty=uncertainty,

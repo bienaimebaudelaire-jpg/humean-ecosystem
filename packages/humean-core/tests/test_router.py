@@ -1,4 +1,4 @@
-"""Tests for the minimal OmniRoute selection logic."""
+"""Tests for RouteCore's minimal capability selection logic."""
 
 import pytest
 
@@ -40,3 +40,36 @@ def test_domain_filtering():
 
     with pytest.raises(NoEligibleCapabilityError):
         select_capability(task, pool, task_id="t3")
+
+
+def test_unknown_cost_never_beats_a_known_cost():
+    no_cost_metadata = Capability(
+        id="mystery",
+        kind="model",
+        status="active",
+        domain="general",
+        metadata={"reliability": 0.99},  # no cost_input_usd/cost_output_usd at all
+    )
+    pool = [no_cost_metadata, _cap("paid", cost=2.0)]
+    task = Task(prompt="compare plans", domain="general")
+
+    route = select_capability(task, pool, task_id="t4")
+
+    assert route.capability_ids == ("paid",)
+    assert "cost_estimate=2.0000" in route.rationale
+
+
+def test_rationale_flags_unknown_cost_when_selected():
+    no_cost_metadata = Capability(
+        id="mystery",
+        kind="model",
+        status="active",
+        domain="general",
+        metadata={"reliability": 0.99},
+    )
+    task = Task(prompt="compare plans", domain="general")
+
+    route = select_capability(task, [no_cost_metadata], task_id="t5")
+
+    assert route.capability_ids == ("mystery",)
+    assert "unknown" in route.rationale

@@ -17,3 +17,7 @@ htmlcov/
 # Local capability observations may contain provider output
 data/*.json
 !data/*.example.json
+
+# The real, locally-curated registry (copy schemas/capabilities.example.json
+# to get started) — only the example is tracked in source control.
+schemas/capabilities.json
