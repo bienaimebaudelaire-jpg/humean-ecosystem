@@ -41,6 +41,16 @@ humean-ecosystem/
 4. Human approval remains required for high-impact policy or routing decisions.
 5. Security, provenance, and audit are first-class concerns.
 
+## Public repo watch
+
+This repository includes a scheduled public repository watcher:
+
+- workflow: `.github/workflows/repo-watch.yml`
+- schedule: 1st and 16th day of each month at 08:00 UTC (+ manual trigger)
+- output: Markdown report + upserted issue with a stable marker (no duplicates)
+
+See `docs/REPO_WATCH.md` for usage, configuration, and security boundaries.
+
 ## Historical reference
 
 A historical configuration reference from the earlier prototype remains in `docs/archive/legacy_humean_config.json` and should be treated as legacy context only.
