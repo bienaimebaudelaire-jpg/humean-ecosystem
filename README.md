@@ -51,6 +51,12 @@ This repository includes a scheduled public repository watcher:
 
 See `docs/REPO_WATCH.md` for usage, configuration, and security boundaries.
 
+## Optional secure runtime
+
+OpenShell is a proposed, optional agent-execution backend; see the
+[integration design](docs/OPENSHELL_INTEGRATION.md). HUMEAN remains
+runtime- and provider-neutral.
+
 ## Historical reference
 
 A historical configuration reference from the earlier prototype remains in `docs/archive/legacy_humean_config.json` and should be treated as legacy context only.

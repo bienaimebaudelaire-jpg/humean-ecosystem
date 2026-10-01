@@ -64,3 +64,8 @@ open-source **OmniRoute** gateway (github.com/diegosouzapw/OmniRoute) for
 free-tier-aware multi-provider access. Its terms-risk catalog (ok / caution /
 ambiguous / avoid per provider) is treated as an input constraint, consistent
 with the non-goal below of never circumventing quotas or farming keys.
+
+An optional sandboxed agent-execution backend such as NVIDIA OpenShell is a
+separate concern from provider routing. See the
+[OpenShell integration design](OPENSHELL_INTEGRATION.md); it adds no required
+runtime dependency and does not change RouteCore's provider neutrality.
