@@ -55,5 +55,23 @@
     "source_url": "https://github.com/diegosouzapw/OmniRoute",
     "gateway_model": "cc/claude-sonnet-4-6",
     "note": "Routed through a self-hosted diegosouzapw/OmniRoute gateway (see humean_core.providers.omniroute_gateway). Candidate until run live and promoted by a human via review_diffs.py -- cost/latency/reliability are reported per-call via X-OmniRoute-* response headers, not fixed here."
+  },
+  {
+    "id": "openshell-agent-runtime",
+    "kind": "agent",
+    "status": "candidate",
+    "domain": "agent_execution",
+    "source_url": "https://github.com/NVIDIA/OpenShell",
+    "metadata": {
+      "runtime": {
+        "backend": "openshell",
+        "sandbox_profile": "humean-agent-default",
+        "provider_alias": "approved-inference",
+        "approved_endpoints": [
+          "https://inference.example.invalid"
+        ],
+        "credential_ref": "secret://deployment/REPLACE_ME"
+      }
+    }
   }
 ]
