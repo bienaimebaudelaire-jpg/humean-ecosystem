@@ -20,6 +20,7 @@ providers = [
     "google-generativeai>=0.8",
     "openai>=1.50",
 ]
+openshell = ["openshell>=0.1.2"]
 
 [tool.pytest.ini_options]
 testpaths = ["packages/humean-core/tests"]

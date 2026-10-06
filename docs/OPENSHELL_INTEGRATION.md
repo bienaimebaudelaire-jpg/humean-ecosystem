@@ -6,6 +6,29 @@ defines an integration contract for HUMEAN/RouteCore; it is not an OpenShell
 configuration, a hard dependency, or a commitment to a specific SDK. HUMEAN
 must remain neutral across runtime and provider implementations.
 
+## Python CLI wrapper
+
+The Python integration is optional. Install its SDK extra with
+`pip install -e '.[openshell]'`; install and configure the OpenShell CLI and
+gateway separately, following the [official installation guide](https://docs.nvidia.com/openshell/latest/about/installation).
+Use a matching CLI, gateway, and SDK release when possible.
+
+The typed `humean_core.providers.openshell_cli.run_openshell_command` helper
+invokes the CLI using an argument list (never a shell), captures output, and
+raises `OpenShellError` if the CLI is missing, times out, or exits unsuccessfully:
+
+```python
+from humean_core.providers.openshell_cli import run_openshell_command
+
+result = run_openshell_command(["sandbox", "--help"], timeout=10)
+print(result.stdout)
+```
+
+Only use this helper for non-interactive CLI commands. It does not install or
+start OpenShell, create a sandbox automatically, or replace HUMEAN policy and
+human approval. Avoid passing credentials as command-line arguments; use
+OpenShell's configured credential and secret mechanisms instead.
+
 OpenShell provides isolated agent sandboxes, runtime policy enforcement for
 files, processes, and network connections, provider credentials restricted to
 approved endpoints, and policy-change verification before approval. Its
