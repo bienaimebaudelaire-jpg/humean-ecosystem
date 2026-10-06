@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import math
 import subprocess
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
 
 class OpenShellError(RuntimeError):
@@ -45,14 +45,20 @@ def run_openshell_command(
             timeout=timeout,
         )
     except FileNotFoundError as exc:
-        raise OpenShellError("OpenShell CLI was not found; install it and ensure it is on PATH") from exc
+        raise OpenShellError(
+            "OpenShell CLI was not found; install it and ensure it is on PATH"
+        ) from exc
     except subprocess.TimeoutExpired as exc:
-        raise OpenShellError(f"OpenShell command timed out after {timeout} seconds") from exc
+        raise OpenShellError(
+            f"OpenShell command timed out after {timeout} seconds"
+        ) from exc
     except OSError as exc:
         raise OpenShellError("Unable to start the OpenShell CLI") from exc
 
     if result.returncode != 0:
-        raise OpenShellError(f"OpenShell command failed with exit code {result.returncode}")
+        raise OpenShellError(
+            f"OpenShell command failed with exit code {result.returncode}"
+        )
     return OpenShellResult(
         stdout=result.stdout,
         stderr=result.stderr,

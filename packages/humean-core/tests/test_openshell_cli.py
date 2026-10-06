@@ -3,7 +3,6 @@ from __future__ import annotations
 import subprocess
 
 import pytest
-
 from humean_core.providers.openshell_cli import (
     OpenShellError,
     OpenShellResult,
@@ -71,7 +70,9 @@ def test_run_openshell_command_reports_timeout(monkeypatch):
 
 def test_run_openshell_command_reports_nonzero_exit(monkeypatch):
     def fake_run(command, **kwargs):
-        return subprocess.CompletedProcess(command, 2, stdout="", stderr="sensitive output")
+        return subprocess.CompletedProcess(
+            command, 2, stdout="", stderr="sensitive output"
+        )
 
     monkeypatch.setattr(subprocess, "run", fake_run)
 
