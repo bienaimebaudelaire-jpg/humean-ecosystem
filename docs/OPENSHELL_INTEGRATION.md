@@ -24,6 +24,19 @@ result = run_openshell_command(["sandbox", "--help"], timeout=10)
 print(result.stdout)
 ```
 
+Commands are checked against an allowlist of argument prefixes. By default only
+informational commands are accepted (`--help`, `--version`, `sandbox --help`);
+anything else raises `OpenShellCommandNotAllowedError`. Enable more commands
+explicitly, with a fixed list defined in code and never built from model or user
+input:
+
+```python
+run_openshell_command(["sandbox", "list"], allowed_commands=[("sandbox", "list")])
+```
+
+The result exposes `stderr`, which may contain sensitive data: do not log it
+verbatim.
+
 Only use this helper for non-interactive CLI commands. It does not install or
 start OpenShell, create a sandbox automatically, or replace HUMEAN policy and
 human approval. Avoid passing credentials as command-line arguments; use

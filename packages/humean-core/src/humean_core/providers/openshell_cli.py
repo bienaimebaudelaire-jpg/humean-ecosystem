@@ -4,12 +4,24 @@ from __future__ import annotations
 
 import math
 import subprocess
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
+
+# Informational commands only. Anything that can create, change or delete state
+# must be allowed explicitly by the caller through ``allowed_commands``.
+DEFAULT_ALLOWED_COMMANDS: tuple[tuple[str, ...], ...] = (
+    ("--help",),
+    ("--version",),
+    ("sandbox", "--help"),
+)
 
 
 class OpenShellError(RuntimeError):
     """Raised when the OpenShell CLI cannot complete a command."""
+
+
+class OpenShellCommandNotAllowedError(ValueError):
+    """Raised when a command is not covered by the allowlist."""
 
 
 @dataclass(frozen=True)
@@ -24,12 +36,24 @@ def run_openshell_command(
     *,
     timeout: float = 30.0,
     executable: str = "openshell",
+    allowed_commands: Iterable[Sequence[str]] = DEFAULT_ALLOWED_COMMANDS,
 ) -> OpenShellResult:
-    """Run a non-interactive OpenShell CLI command without invoking a shell."""
+    """Run a non-interactive OpenShell CLI command without invoking a shell.
+
+    ``args`` must start with one of the ``allowed_commands`` prefixes (default:
+    informational commands only). Pass an explicit allowlist to enable more; never
+    build it from model or user input.
+    """
     if isinstance(args, (str, bytes)) or not args:
         raise ValueError("args must be a non-empty sequence of strings")
     if any(not isinstance(arg, str) or "\0" in arg for arg in args):
         raise ValueError("args must contain only strings without null bytes")
+    args = tuple(args)
+    allowed = [tuple(prefix) for prefix in allowed_commands]
+    if not any(prefix and args[: len(prefix)] == prefix for prefix in allowed):
+        raise OpenShellCommandNotAllowedError(
+            "OpenShell command is not in the allowlist"
+        )
     if not executable or "\0" in executable:
         raise ValueError("executable must be a non-empty string without null bytes")
     if isinstance(timeout, bool) or not math.isfinite(timeout) or timeout <= 0:

@@ -4,6 +4,7 @@ import subprocess
 
 import pytest
 from humean_core.providers.openshell_cli import (
+    OpenShellCommandNotAllowedError,
     OpenShellError,
     OpenShellResult,
     run_openshell_command,
@@ -77,6 +78,42 @@ def test_run_openshell_command_reports_nonzero_exit(monkeypatch):
     monkeypatch.setattr(subprocess, "run", fake_run)
 
     with pytest.raises(OpenShellError, match="exit code 2") as exc_info:
-        run_openshell_command(["sandbox", "list"])
+        run_openshell_command(
+            ["sandbox", "list"], allowed_commands=[("sandbox", "list")]
+        )
 
     assert "sensitive output" not in str(exc_info.value)
+
+
+@pytest.mark.parametrize(
+    "args",
+    [["sandbox", "delete", "x"], ["sandbox"], ["--help-not"], ["rm", "--help"]],
+)
+def test_run_openshell_command_rejects_commands_outside_default_allowlist(
+    monkeypatch, args
+):
+    def fake_run(*a, **k):
+        raise AssertionError("subprocess must not be called")
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+
+    with pytest.raises(OpenShellCommandNotAllowedError):
+        run_openshell_command(args)
+
+
+def test_run_openshell_command_accepts_explicitly_allowed_prefix(monkeypatch):
+    def fake_run(command, **kwargs):
+        return subprocess.CompletedProcess(command, 0, stdout="ok", stderr="")
+
+    monkeypatch.setattr(subprocess, "run", fake_run)
+
+    result = run_openshell_command(
+        ["sandbox", "list", "--json"], allowed_commands=[("sandbox", "list")]
+    )
+
+    assert result.stdout == "ok"
+
+
+def test_run_openshell_command_ignores_empty_allowlist_entries():
+    with pytest.raises(OpenShellCommandNotAllowedError):
+        run_openshell_command(["sandbox", "list"], allowed_commands=[()])
